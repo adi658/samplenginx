@@ -1,0 +1,2 @@
+# samplenginx
+sample  nginx 
