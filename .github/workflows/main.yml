@@ -9,7 +9,7 @@ jobs:
     env:
       working-directory: terraform
       TF_WORKSPACE: my-workspace
-      repository: https://github.com/adi658/samplenginx.wiki.git
+      repository: https://github.com/adi658/samplenginx
     steps:
       - uses: hashicorp/setup-terraform@v1
         with:
