@@ -92,11 +92,16 @@ jobs:
           repository: ${{github.repository}}.wiki
           path: wiki
 
+#       - name: Add plan to release wiki
+#         #if: ${{ github.event.release.prerelease }}
+#         run: |
+#           cd wiki && \
+#           echo ${{steps.planout.outputs.result}} > plan1.md
+
       - name: Add plan to release wiki
-        #if: ${{ github.event.release.prerelease }}
         run: |
           cd wiki && \
-          echo ${{steps.planout.outputs.result}} > plan1.md
+          echo ${{steps.formatnewline.outcome}} > plan1.md
 
       - name: Add and commit
         #if: ${{ github.event.release.prerelease }}
