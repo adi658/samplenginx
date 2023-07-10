@@ -72,7 +72,7 @@ jobs:
         run: |-
           cd ./wiki && git push \
             --set-upstream "origin" \
-            "HEAD:refs/heads/main"
+            "HEAD:refs/heads/master"
             
             
 #       - name: Push changes to wiki repo
