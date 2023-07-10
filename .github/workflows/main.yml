@@ -96,7 +96,7 @@ jobs:
             </details>
 
             *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
-            return ${output}
+            return ${{output}}
         
 
       # plan end ------------------------------------------------------------------------
