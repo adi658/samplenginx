@@ -63,8 +63,7 @@ jobs:
         id: planout
         with:
           script: |
-            const output = `#### Terraform Format and Style \`${{ steps.fmt.outcome }}\`
-            #### Terraform Initialization \`${{ steps.init.outcome }}\`
+            const output = `#### Terraform Initialization \`${{ steps.init.outcome }}\`
             #### Terraform Validation \`${{ steps.validate.outcome }}\`
 
             <details>
@@ -77,7 +76,7 @@ jobs:
             #### Terraform Plan \`${{ steps.plan.outcome }}\`
             <details>
               <summary>Show Plan</summary>
-              ${{ steps.plan.outcome }}
+              ${{ steps.fplan.outputs.tf_plan }}
             </details>
 
             *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Working Directory: \`${{ env.tf_actions_working_dir }}\`, Workflow: \`${{ github.workflow }}\`*`;
