@@ -85,7 +85,7 @@ jobs:
         with:
          run: |
           tfoutputplan=$(cat <<'EOF'
-          "${ steps.planout.outputs.result//\\n/ }"
+          "${steps.planout.outputs.result//\\n/ }"
           EOF
           )
           echo "output<<EOF" >> $GITHUB_TF_OUTPUT
