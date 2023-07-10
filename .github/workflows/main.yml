@@ -84,7 +84,8 @@ jobs:
         id: formatnewline
         with:
           script: | 
-            string = "${steps.planout.outputs.result//$'\n'/ }"
+            string = "${steps.planout.outputs.result//$'\n'/<br>}";
+            echo string
             return string
             
       - name: Checkout Wiki
