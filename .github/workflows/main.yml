@@ -82,7 +82,7 @@ jobs:
       - name: Format new Line 
         id: formatnewline
         run: |
-          tfoutputplan="${steps.planout.outputs.result//\\n/ }"
+          tfoutputplan="${steps.planout.outputs.result//\\n/<br>}"
           echo ${tfoutputplan}
           
       - name: Checkout Wiki
