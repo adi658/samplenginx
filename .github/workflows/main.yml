@@ -49,7 +49,6 @@ jobs:
       - name: Format Plan
         id: fplan
         working-directory: ${{ env.working-directory }}
-        #if: ${{ github.event_name == 'pull_request' || github.event.release.prerelease }}
         run: |
           plan=$(cat <<'EOF'
           ${{ format('{0}{1}', steps.plan.outputs.stdout, steps.plan.outputs.stderr) }}
@@ -71,22 +70,18 @@ jobs:
             <details>
               <summary>Validation Output</summary>
               \`\`\`
-              ${{ steps.validate.outputs.stdout }}
               ${{ steps.validate.outcome }}
-              ${{ steps.plan.outcome }}
               \`\`\`
             </details>
 
             #### Terraform Plan \`${{ steps.plan.outcome }}\`
             <details>
               <summary>Show Plan</summary>
-              \`\`\`
-              ${process.env.TFPLAN}
-              \`\`\`
+              ${{ steps.plan.outcome }}
             </details>
 
             *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Working Directory: \`${{ env.tf_actions_working_dir }}\`, Workflow: \`${{ github.workflow }}\`*`;
-            echo output     
+            return output     
         env:
           TFPLAN: ${{ steps.fplan.outputs.tf_plan }}
           
