@@ -47,17 +47,17 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_PAT }} # For terraform on github
 
-      - name: Format Plan
-        id: fplan
-        #if: ${{ github.event_name == 'pull_request' || github.event.release.prerelease }}
-        run: |
-          plan=$(cat <<'EOF'
-          ${{ format('{0}{1}', steps.plan.outputs.stdout, steps.plan.outputs.stderr) }}
-          EOF
-          )
-          echo "tf_plan<<EOF" >> $GITHUB_OUTPUT
-          echo "${plan}" | grep -v 'Refreshing state' | grep -v ': Reading...' | grep -v ': Read complete after' | grep -v '^ *$' | grep -A 4000 'Terraform will perform the following actions:' | cut -c -4000 >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+#       - name: Format Plan
+#         id: fplan
+#         #if: ${{ github.event_name == 'pull_request' || github.event.release.prerelease }}
+#         run: |
+#           plan=$(cat <<'EOF'
+#           ${{ format('{0}{1}', steps.plan.outputs.stdout, steps.plan.outputs.stderr) }}
+#           EOF
+#           )
+#           echo "tf_plan<<EOF" >> $GITHUB_OUTPUT
+#           echo "${plan}" | grep -v 'Refreshing state' | grep -v ': Reading...' | grep -v ': Read complete after' | grep -v '^ *$' | grep -A 4000 'Terraform will perform the following actions:' | cut -c -4000 >> $GITHUB_OUTPUT
+#           echo "EOF" >> $GITHUB_OUTPUT
 
 #       - name: Plan output
 #         uses: actions/github-script@v6
@@ -103,7 +103,7 @@ jobs:
         run: |
           cd wiki && \
           # echo ${{steps.planout.outputs.result}} > ${{ github.ref_name }}-${{ matrix.target }}-${{ inputs.terraform_apply && 'apply' || 'plan'}}.md &&\
-          echo ${{steps.planout.outputs.result}} > plan.md
+          echo "hello world" > plan.md
 
       - name: Add and commit
         #if: ${{ github.event.release.prerelease }}
