@@ -8,12 +8,15 @@ jobs:
     runs-on: ubuntu-latest
     env:
       working-directory: terraform
-      #TF_WORKSPACE: my-workspace
+      TF_WORKSPACE: my-workspace
     steps:
       - uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: 0.14.10
 
+      - name: Check out code
+        uses: actions/checkout@v2
+        
       - name: Terraform Fmt
         id: fmt
         run: terraform fmt -check
