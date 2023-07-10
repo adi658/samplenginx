@@ -84,8 +84,7 @@ jobs:
         id: formatnewline
         with:
           run: |
-            ot = "${${{steps.planout.outputs.result}}//\\n/ }"
-            echo ot
+            echo "${ ${{steps.planout.outputs.result}}//\\n/ }"
             
       - name: Checkout Wiki
         #if: ${{ github.event.release.prerelease }}
