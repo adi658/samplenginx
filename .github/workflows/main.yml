@@ -80,12 +80,12 @@ jobs:
           TFPLAN: ${{ steps.fplan.outputs.tf_plan }}
 
 
-      - name: Terraform Plan
-        id: planout
-        run: terraform plan -no-color
-        working-directory: ${{ env.working-directory }}
-        env:
-          TF_VAR_assume_role: "my-github-actions-role"    
+#       - name: Terraform Plan
+#         id: planout
+#         run: terraform plan -no-color
+#         working-directory: ${{ env.working-directory }}
+#         env:
+#           TF_VAR_assume_role: "my-github-actions-role"    
 
       # plan end ------------------------------------------------------------------------
       
