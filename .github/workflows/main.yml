@@ -35,12 +35,34 @@ jobs:
         id: validate
         run: terraform validate
 
-      - name: Terraform Plan
+      - name: Terraform Plan output
+        uses: actions/github-script@v6
         id: planout
-        run: terraform plan -no-color
-        working-directory: ${{ env.working-directory }}
+        if: ${{ github.event_name == 'pull_request' || github.event.release.prerelease }}
+        with:
+          result-encoding: string
+          script: |
+            const output = `#### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
+            #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
+            <details>
+            <summary>Show Plan for \`${{ matrix.target }}\`</summary>
+
+            \`\`\`
+            ${process.env.TFPLAN}
+            \`\`\`
+
+            </details>
+            **Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`**`;
+            return ${output}
         env:
-          TF_VAR_assume_role: "my-github-actions-role"    
+          TFPLAN: ${{ steps.fplan.outputs.tf_plan }}
+
+#       - name: Terraform Plan
+#         id: planout
+#         run: terraform plan -no-color
+#         working-directory: ${{ env.working-directory }}
+#         env:
+#           TF_VAR_assume_role: "my-github-actions-role"    
 
       # ------------------------------------------------------------------------
       
