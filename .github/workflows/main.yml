@@ -58,6 +58,27 @@ jobs:
           echo "${plan}" | grep -v 'Refreshing state' | grep -v ': Reading...' | grep -v ': Read complete after' | grep -v '^ *$' | grep -A 4000 'Terraform will perform the following actions:' | cut -c -4000 >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
+      - name: Plan output
+        uses: actions/github-script@v6
+        id: planout
+        with:
+          result-encoding: string
+          script: |
+            const output = `#### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
+            #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
+            <details>
+            <summary>Show Plan for \`${{ matrix.target }}\`</summary>
+
+            \`\`\`
+            ${process.env.TFPLAN}
+            \`\`\`
+
+            </details>
+            **Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`**`;
+            return ${output}
+        env:
+          TFPLAN: ${{ steps.fplan.outputs.tf_plan }}
+          
       # plan end ------------------------------------------------------------------------
       
       - name: Checkout Wiki
