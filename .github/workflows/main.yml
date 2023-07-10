@@ -38,7 +38,7 @@ jobs:
       - name: Terraform Plan output
         uses: actions/github-script@v6
         id: planout
-        if: ${{ github.event_name == 'pull_request' || github.event.release.prerelease }}
+        #if: ${{ github.event_name == 'pull_request' || github.event.release.prerelease }}
         with:
           result-encoding: string
           script: |
