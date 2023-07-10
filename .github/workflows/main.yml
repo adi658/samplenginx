@@ -80,7 +80,7 @@ jobs:
           TFPLAN: ${{ steps.fplan.outputs.tf_plan }}
           
       - name: Format new Line 
-        uses: actions/github-scripts@v6
+        uses: actions/github-script@v6
         id: formatnewline
         with:
           script: | 
