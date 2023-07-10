@@ -69,9 +69,9 @@ jobs:
             <details>
             <summary>Show Plan for </summary>
 
-            \`\`\`
+            \'\'\'
             ${process.env.TFPLAN}
-            \`\`\`
+            \'\'\'
 
             </details>
             return ${output}
