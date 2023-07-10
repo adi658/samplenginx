@@ -64,17 +64,7 @@ jobs:
         with:
           result-encoding: string
           script: |
-            return ${process.env.TFPLAN}
-#         env:
-#           TFPLAN: ${{ steps.fplan.outputs.tf_plan }}
-
-
-#       - name: Terraform Plan
-#         id: planout
-#         run: terraform plan -no-color
-#         working-directory: ${{ env.working-directory }}
-#         env:
-#           TF_VAR_assume_role: "my-github-actions-role"    
+            return "000"
 
       # plan end ------------------------------------------------------------------------
       
