@@ -69,11 +69,8 @@ jobs:
             <details>
             <summary>Show Plan for </summary>
 
-            </details>
-            **Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`**`;
+            </details>`;
             return ${output}
-        env:
-          TFPLAN: ${{ steps.fplan.outputs.tf_plan }}
 
       # plan end ------------------------------------------------------------------------
       
