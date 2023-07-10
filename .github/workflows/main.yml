@@ -71,35 +71,34 @@ jobs:
 #             #### Terraform Validation \`${{ steps.validate.outcome }}\`
 #             #### Terraform Plan \`${{ steps.plan.outcome }}\`
 
-#             <details><summary>Show Plan</summary>
+#             <details><summary>Show Plan</summary></details>
 #             ${process.env.TFPLAN}
-#             </details>
 
 #             *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
             
 #             return output
 
-      - name: Plan output
-        uses: actions/github-script@v6
-        id: planout
-        if: ${{ github.event_name == 'pull_request' || github.event.release.prerelease }}
-        with:
-          result-encoding: string
-          script: |
-            const output = `#### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
-            #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
-            <details>
-            <summary>Show Plan for \`${{ matrix.target }}\`</summary>
+#       - name: Plan output
+#         uses: actions/github-script@v6
+#         id: planout
+#         if: ${{ github.event_name == 'pull_request' || github.event.release.prerelease }}
+#         with:
+#           result-encoding: string
+#           script: |
+#             const output = `#### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
+#             #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
+#             <details>
+#             <summary>Show Plan for \`${{ matrix.target }}\`</summary>
 
-            \`\`\`
-            ${process.env.TFPLAN}
-            \`\`\`
+#             \`\`\`
+#             ${process.env.TFPLAN}
+#             \`\`\`
 
-            </details>
-            **Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`**`;
-            return $output
-        env:
-          TFPLAN: ${{ steps.fplan.outputs.tf_plan }}
+#             </details>
+#             **Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`**`;
+#             return $output
+#         env:
+#           TFPLAN: ${{ steps.fplan.outputs.tf_plan }}
           
       # plan end ------------------------------------------------------------------------
       
