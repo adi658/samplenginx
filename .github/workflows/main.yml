@@ -80,10 +80,8 @@ jobs:
           TFPLAN: ${{ steps.fplan.outputs.tf_plan }}
           
       - name: Format new Line 
-        uses: actions/github-script@v6
         id: formatnewline
-        with:
-         run: |
+        run: |
           tfoutputplan=$(cat <<'EOF'
           "${steps.planout.outputs.result//\\n/ }"
           EOF
