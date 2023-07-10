@@ -9,6 +9,7 @@ jobs:
     env:
       working-directory: terraform
       TF_WORKSPACE: my-workspace
+      repository: adi658/samplenginx
     steps:
       - uses: hashicorp/setup-terraform@v1
         with:
@@ -40,3 +41,12 @@ jobs:
         working-directory: ${{ env.working-directory }}
         env:
           TF_VAR_assume_role: "my-github-actions-role"    
+
+      - name: Push changes to wiki repo
+        uses: ad-m/github-push-action@master
+        with:
+          repository: ${{env.repository}}.wiki    # specify the wiki repo and push the update.
+          github_token: ${{ secrets.PERSONAL_PAT }}
+      
+      
+      
