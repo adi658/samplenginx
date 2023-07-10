@@ -82,12 +82,9 @@ jobs:
       - name: Format new Line 
         id: formatnewline
         run: |
-          tfoutputplan=$(cat <<'EOF'
-          "${steps.planout.outputs.result//\\n/ }"
-          EOF
-          )
-          echo "output<<EOF" >> $GITHUB_TF_OUTPUT
-            
+          tfoutputplan="${steps.planout.outputs.result//\\n/ }"
+          echo ${tfoutputplan}
+          
       - name: Checkout Wiki
         #if: ${{ github.event.release.prerelease }}
         uses: actions/checkout@v3
