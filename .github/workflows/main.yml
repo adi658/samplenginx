@@ -62,7 +62,7 @@ jobs:
         with:
           script: |
             const output = `#### Terraform Initialization \`${{ steps.init.outcome }}\`
-            #### Terraform Validation \`$(echo ${{ steps.validate.outcome }} | tr '\\n' '\<br\>')\`
+            #### Terraform Validation \`$(echo ${{ steps.validate.outcome }} | tr '\\n' \<br\>)\`
             <details>
             <summary>Validation Output</summary>
             ${{ steps.validate.outcome }}
