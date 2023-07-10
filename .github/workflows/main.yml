@@ -4,9 +4,7 @@ name: "GitHub Actions Example"
   push: { branches: [main] }
 
 jobs:
-  strategy:
-    matrix:
-      target: ${{ fromJSON(needs.prepare.outputs.target_envs) }}
+
   terraform:
     runs-on: ubuntu-latest
     env:
