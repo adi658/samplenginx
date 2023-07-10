@@ -83,8 +83,9 @@ jobs:
         uses: actions/github-script@v6
         id: formatnewline
         with:
-          script: |
-            string = "${${{steps.planout.outputs.result}}//$'\n'/<br>}";
+          run: |
+            ot = ${{steps.planout.outputs.result}}
+            string="${ot//\n/<br>}"
             return string
             
       - name: Checkout Wiki
