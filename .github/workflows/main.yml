@@ -72,7 +72,7 @@ jobs:
         run: |
           cd wiki && \
           # echo ${{steps.planout.outputs.result}} > ${{ github.ref_name }}-${{ matrix.target }}-${{ inputs.terraform_apply && 'apply' || 'plan'}}.md &&\
-          echo "hello world!!!" > plan.md
+          echo "hello world!!! $GITHUB_OUTPUT " > plan.md
 
       - name: Add and commit
         #if: ${{ github.event.release.prerelease }}
