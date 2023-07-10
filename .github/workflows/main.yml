@@ -52,7 +52,6 @@ jobs:
           ${{ format('{0}{1}', "${steps.plan.outputs.stdout//\\n/ }", "${steps.plan.outputs.stderr//\\n/ }" ) }}
           EOF
           )
-          nw_strr=
 
           echo "tf_plan<<EOF" >> $GITHUB_OUTPUT
           echo "${plan}" | grep -v 'Refreshing state' | grep -v ': Reading...' | grep -v ': Read complete after' | grep -v '^ *$' | grep -A 4000 'Terraform will perform the following actions:' | cut -c -4000 >> $GITHUB_OUTPUT
