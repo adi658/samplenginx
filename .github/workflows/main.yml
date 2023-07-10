@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       working-directory: terraform
-      TF_WORKSPACE: my-workspace
+      #TF_WORKSPACE: my-workspace
     steps:
       - uses: hashicorp/setup-terraform@v1
         with:
