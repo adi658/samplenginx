@@ -37,7 +37,7 @@ jobs:
 
       - name: Terraform plan
         id: plan
-        run: TF_PLAN=$(terraform plan -no-color)
+        run: TF_PLAN=$(terraform plan -no-color) && echo ${TF_PLAN}
         working-directory: ${{ env.working-directory }}
         env:
           TF_VAR_assume_role: "my-github-actions-role"    
@@ -56,7 +56,7 @@ jobs:
         run: |
           cd wiki && \
           # echo ${{steps.planout.outputs.result}} > ${{ github.ref_name }}-${{ matrix.target }}-${{ inputs.terraform_apply && 'apply' || 'plan'}}.md &&\
-          echo "hello world !!!" ${TF_PLAN} > plan.md
+          echo "hello world !!! ${TF_PLAN} " > plan.md
 
       - name: Add and commit
         #if: ${{ github.event.release.prerelease }}
