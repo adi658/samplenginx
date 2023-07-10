@@ -73,7 +73,7 @@ jobs:
             <summary>Show Plan</summary>
             ${{ steps.fplan.outputs.tf_plan }}
             </details>
-
+            
             *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Working Directory: \`${{ env.tf_actions_working_dir }}\`, Workflow: \`${{ github.workflow }}\`*`;
             return output
         env:
@@ -84,7 +84,6 @@ jobs:
         run: |
           tfoutputplan=$(echo steps.planout.outputs.result | tr '\r' '<br \/>' )
           echo ${tfoutputplan}
-          return tfoutputplan
           
       - name: Checkout Wiki
         #if: ${{ github.event.release.prerelease }}
@@ -97,8 +96,8 @@ jobs:
         #if: ${{ github.event.release.prerelease }}
         run: |
           cd wiki && \
-          echo ${{steps.formatnewline.outputs.result}} > plan1.md
-          
+          echo ${{steps.formatnewline.outcome}} > plan1.md
+
       - name: Add and commit
         #if: ${{ github.event.release.prerelease }}
         run: cd ./wiki && git add . && git commit -m "Added release ${{ github.ref_name}}"
