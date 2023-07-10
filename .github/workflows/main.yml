@@ -63,7 +63,7 @@ jobs:
           script: |
             const output = `#### Terraform Initialization \`${{ steps.init.outcome }}\`
             #### Terraform Validation \`${{ steps.validate.outcome }}\`
-
+            ```
             <details>
               <summary>Validation Output</summary>
               ${{ steps.validate.outcome }}
@@ -74,8 +74,7 @@ jobs:
               <summary>Show Plan</summary>
               ${{ steps.fplan.outputs.tf_plan }}
             </details>
-
-            ${{ steps.fplan.outputs.tf_plan }}
+            ```
 
             *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Working Directory: \`${{ env.tf_actions_working_dir }}\`, Workflow: \`${{ github.workflow }}\`*`;
             return output     
