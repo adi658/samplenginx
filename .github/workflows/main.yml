@@ -76,8 +76,7 @@ jobs:
 
             *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Working Directory: \`${{ env.tf_actions_working_dir }}\`, Workflow: \`${{ github.workflow }}\`*`;
             output="${output//\\n/<br>}"
-
-            return output     
+            return ${output}     
         env:
           TFPLAN: ${{ steps.fplan.outputs.tf_plan }}
           
