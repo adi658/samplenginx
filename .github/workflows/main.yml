@@ -61,7 +61,7 @@ jobs:
         id: planout
         with:
           script: |
-            output = `#### Terraform Initialization \`${{ steps.init.outcome }}\`
+            const output = `#### Terraform Initialization \`${{ steps.init.outcome }}\`
             #### Terraform Validation \`${{ steps.validate.outcome }}\`
             <details>
             <summary>Validation Output</summary>
@@ -75,12 +75,18 @@ jobs:
             </details>
 
             *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Working Directory: \`${{ env.tf_actions_working_dir }}\`, Workflow: \`${{ github.workflow }}\`*`;
-            string=${output//$'\n'/ }
-            echo string
-            return string    
+            return output
         env:
           TFPLAN: ${{ steps.fplan.outputs.tf_plan }}
           
+      - name: Format new Line 
+        uses: actions/github-scripts@v6
+        id: formatnewline
+        with:
+          script: | 
+            string = ${steps.planout.outputs.result//$'\n'/ }
+            return string
+            
       - name: Checkout Wiki
         #if: ${{ github.event.release.prerelease }}
         uses: actions/checkout@v3
@@ -92,7 +98,7 @@ jobs:
         #if: ${{ github.event.release.prerelease }}
         run: |
           cd wiki && \
-          echo ${{steps.planout.outputs.result}} > plan1.md
+          echo ${{steps.formatnewline.outputs.result}} > plan1.md
           
       - name: Add and commit
         #if: ${{ github.event.release.prerelease }}
