@@ -31,13 +31,13 @@ jobs:
           TF_CLI_ARGS_init: "-backend-config=role_arn=arn:aws:iam::99999999:role/my-github-actions-role -upgrade -reconfigure"
           TF_VAR_assume_role: "my-github-actions-role"
 
-      - name: Terraform validate
+      - name: Terraform_Validate
         id: validate
         run: terraform validate
 
-      - name: Terraform plan
+      - name: Terraform_Plan
         id: plan
-        run: TF_PLAN=$(terraform plan -no-color) && echo "-----> ${TF_PLAN} <-----" 
+        run: $(terraform plan -no-color)
         working-directory: ${{ env.working-directory }}
         env:
           TF_VAR_assume_role: "my-github-actions-role"    
@@ -56,7 +56,7 @@ jobs:
         run: |
           cd wiki && \
           # echo ${{steps.planout.outputs.result}} > ${{ github.ref_name }}-${{ matrix.target }}-${{ inputs.terraform_apply && 'apply' || 'plan'}}.md &&\
-          echo "hello world !!! ${TF_PLAN} " > plan.md
+          echo ${{ steps.Terraform_Plan.outputs.stdout }}  > plan.md
 
       - name: Add and commit
         #if: ${{ github.event.release.prerelease }}
