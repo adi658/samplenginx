@@ -73,7 +73,7 @@ jobs:
 
             <details>
               <summary>Validation Output</summary>
-              \`\`\`\n
+              \`\`\`
               ${{ steps.validate.outputs.stdout }}
               ${{ steps.validate.outcome }}
               ${{ steps.plan.outcome }}
@@ -104,7 +104,7 @@ jobs:
         #if: ${{ github.event.release.prerelease }}
         run: |
           cd wiki && \
-          echo ${{steps.planout.outputs.result}} > plan.md
+          echo ${{steps.planout.outputs.result}} > plan1.md
           
       - name: Add and commit
         #if: ${{ github.event.release.prerelease }}
