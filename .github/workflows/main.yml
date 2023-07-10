@@ -65,9 +65,7 @@ jobs:
             #### Terraform Validation \`${{ steps.validate.outcome }}\`
             <details>
             <summary>Validation Output</summary>
-            ```
             ${{ steps.validate.outcome }}
-            ```
             </details>
 
             #### Terraform Plan \`${{ steps.plan.outcome }}\`
