@@ -65,7 +65,7 @@ jobs:
           result-encoding: string
           script: |
             const output = "#### Terraform Validation
-            #### Terraform Plan '${{ steps.plan.outcome }}'
+            #### Terraform Plan
             <details>
             <summary>Show Plan for </summary>
 
@@ -75,8 +75,8 @@ jobs:
 
             </details>";
             return ${output}
-        env:
-          TFPLAN: ${{ steps.fplan.outputs.tf_plan }}
+        #env:
+          #TFPLAN: ${{ steps.fplan.outputs.tf_plan }}
 
 
 #       - name: Terraform Plan
