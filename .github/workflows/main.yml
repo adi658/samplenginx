@@ -83,9 +83,9 @@ jobs:
         uses: actions/github-script@v6
         id: formatnewline
         with:
-          script: |
+          run: |
             ot = "${${{steps.planout.outputs.result}}//\\n/ }"
-            return ot
+            echo ot
             
       - name: Checkout Wiki
         #if: ${{ github.event.release.prerelease }}
@@ -98,7 +98,7 @@ jobs:
         #if: ${{ github.event.release.prerelease }}
         run: |
           cd wiki && \
-          echo ${{steps.formatnewline.outputs.result}} > plan1.md
+          echo ${{steps.planout.outputs.result}} > plan1.md
           
       - name: Add and commit
         #if: ${{ github.event.release.prerelease }}
