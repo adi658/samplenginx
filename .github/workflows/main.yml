@@ -56,29 +56,25 @@ jobs:
           echo "${plan}" | grep -v 'Refreshing state' | grep -v ': Reading...' | grep -v ': Read complete after' | grep -v '^ *$' | grep -A 4000 'Terraform will perform the following actions:' | cut -c -4000 >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
-      - name: Plan Output
+      - name: Plan output
         uses: actions/github-script@v6
         id: planout
+        if: ${{ github.event_name == 'pull_request' || github.event.release.prerelease }}
         with:
+          result-encoding: string
           script: |
-            const output = `#### Terraform Initialization \`${{ steps.init.outcome }}\`
-            #### Terraform Validation \`${{ steps.validate.outcome }}\`
-
+            const output = `- Terraform Validation \`${{ steps.validate.outcome }}\`
+            - Terraform Plan \`${{ steps.plan.outcome }}\`
             <details>
-              <summary>Validation Output</summary>
-              \`\`\`
-              ${{ steps.validate.outcome }}
-              \`\`\`
-            </details>
+            <summary>Show Plan for \`${{ matrix.target }}\`</summary>
 
-            #### Terraform Plan \`${{ steps.plan.outcome }}\`
-            <details>
-              <summary>Show Plan</summary>
-              ${{ steps.fplan.outputs.tf_plan }}
-            </details>
+            \`\`\`
+            ${process.env.TFPLAN}
+            \`\`\`
 
-            *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Working Directory: \`${{ env.tf_actions_working_dir }}\`, Workflow: \`${{ github.workflow }}\`*`;
-            return output     
+            </details>
+            **Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`**`;
+            return ${output}
         env:
           TFPLAN: ${{ steps.fplan.outputs.tf_plan }}
           
