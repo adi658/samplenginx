@@ -71,7 +71,7 @@ jobs:
             #### Terraform Plan \`${{ steps.plan.outcome }}\`
             <details>
             <summary>Show Plan</summary>
-            $(echo steps.fplan.outputs.tf_plan | tr '\n' '<br \/>' )
+            $(echo steps.fplan.outputs.tf_plan | tr '\\n' '<br>' )
             </details>
             
             *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Working Directory: \`${{ env.tf_actions_working_dir }}\`, Workflow: \`${{ github.workflow }}\`*`;
