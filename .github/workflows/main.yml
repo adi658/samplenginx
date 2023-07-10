@@ -73,7 +73,7 @@ jobs:
 
             </details>
             **Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`**`;
-            return ${output}
+            return output
         env:
           TFPLAN: ${{ steps.fplan.outputs.tf_plan }}
           
