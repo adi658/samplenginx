@@ -4,6 +4,9 @@ name: "GitHub Actions Example"
   push: { branches: [main] }
 
 jobs:
+  strategy:
+    matrix:
+      target: ${{ fromJSON(needs.prepare.outputs.target_envs) }}
   terraform:
     runs-on: ubuntu-latest
     env:
@@ -35,7 +38,28 @@ jobs:
         id: validate
         run: terraform validate
 
-      - name: Terraform Plan output
+      # plan start ------------------------------------------------------------------------
+
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -no-color -out=tfplan-myplan
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_PAT }} # For terraform on github
+
+      - name: Format Plan
+        id: fplan
+        #if: ${{ github.event_name == 'pull_request' || github.event.release.prerelease }}
+        run: |
+          plan=$(cat <<'EOF'
+          ${{ format('{0}{1}', steps.plan.outputs.stdout, steps.plan.outputs.stderr) }}
+          EOF
+          )
+          echo "tf_plan<<EOF" >> $GITHUB_OUTPUT
+          echo "${plan}" | grep -v 'Refreshing state' | grep -v ': Reading...' | grep -v ': Read complete after' | grep -v '^ *$' | grep -A 4000 'Terraform will perform the following actions:' | cut -c -4000 >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Plan output
         uses: actions/github-script@v6
         id: planout
         #if: ${{ github.event_name == 'pull_request' || github.event.release.prerelease }}
@@ -45,7 +69,7 @@ jobs:
             const output = `#### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
             #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
             <details>
-            <summary>Show Plan for \`${{ matrix.target }}\`</summary>
+            <summary>Show Plan for </summary>
 
             \`\`\`
             ${process.env.TFPLAN}
@@ -57,6 +81,7 @@ jobs:
         env:
           TFPLAN: ${{ steps.fplan.outputs.tf_plan }}
 
+
 #       - name: Terraform Plan
 #         id: planout
 #         run: terraform plan -no-color
@@ -64,7 +89,7 @@ jobs:
 #         env:
 #           TF_VAR_assume_role: "my-github-actions-role"    
 
-      # ------------------------------------------------------------------------
+      # plan end ------------------------------------------------------------------------
       
       - name: Checkout Wiki
         #if: ${{ github.event.release.prerelease }}
