@@ -65,9 +65,9 @@ jobs:
           result-encoding: string
           script: |
             const output = `#### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
-            #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
+            #### Terraform Plan 
             <details>
-            <summary>Show Plan for \`${{ matrix.target }}\`</summary>
+            <summary>Show Plan for </summary>
 
             \`\`\`
             ${process.env.TFPLAN}
