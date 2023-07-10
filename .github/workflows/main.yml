@@ -85,7 +85,6 @@ jobs:
         with:
           script: |
             string = `${${{steps.planout.outputs.result}}//$'\n'/<br>}`;
-            echo string
             return string
             
       - name: Checkout Wiki
