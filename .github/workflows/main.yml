@@ -36,8 +36,6 @@ jobs:
         id: validate
         run: terraform validate
 
-      # plan start ------------------------------------------------------------------------
-
       - name: Terraform Plan
         id: plan
         working-directory: ${{ env.working-directory }}
@@ -84,8 +82,6 @@ jobs:
         env:
           TFPLAN: ${{ steps.fplan.outputs.tf_plan }}
           
-      # plan end ------------------------------------------------------------------------
-      
       - name: Checkout Wiki
         #if: ${{ github.event.release.prerelease }}
         uses: actions/checkout@v3
