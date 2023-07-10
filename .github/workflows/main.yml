@@ -68,9 +68,10 @@ jobs:
             #### Terraform Plan 
             <details>
             <summary>Show Plan for </summary>
-
             </details>`;
             return ${output}
+        env:
+          TFPLAN: abc
 
       # plan end ------------------------------------------------------------------------
       
