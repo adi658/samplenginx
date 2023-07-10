@@ -37,7 +37,7 @@ jobs:
 
       - name: Terraform plan
         id: plan
-        run: TF_PLAN=$(terraform plan -no-color) && echo "Plan start: " && echo ${TF_PLAN} && echo "Plan end. " 
+        run: TF_PLAN=$(terraform plan -no-color) && echo "-----> ${TF_PLAN} <-----" 
         working-directory: ${{ env.working-directory }}
         env:
           TF_VAR_assume_role: "my-github-actions-role"    
