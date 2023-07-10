@@ -111,9 +111,8 @@ jobs:
         #if: ${{ github.event.release.prerelease }}
         run: |
           cd wiki && \
-          # echo ${{steps.planout.outputs.result}} > ${{ github.ref_name }}-${{ matrix.target }}-${{ inputs.terraform_apply && 'apply' || 'plan'}}.md &&\
-          echo "hello world!!! $GITHUB_OUTPUT " > plan.md
-
+          echo ${{steps.planout.outputs.result}} > plan.md
+          
       - name: Add and commit
         #if: ${{ github.event.release.prerelease }}
         run: cd ./wiki && git add . && git commit -m "Added release ${{ github.ref_name}}"
