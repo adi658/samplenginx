@@ -64,17 +64,7 @@ jobs:
         with:
           result-encoding: string
           script: |
-            const output = `#### Terraform Validation 
-            #### Terraform Plan 
-            <details>
-            <summary>Show Plan for</summary>
-
-            \`\`\`
-            ${process.env.TFPLAN}
-            \`\`\`
-
-            </details>`;
-            return ${output}
+            return ${process.env.TFPLAN}
 #         env:
 #           TFPLAN: ${{ steps.fplan.outputs.tf_plan }}
 
