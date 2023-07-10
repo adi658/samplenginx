@@ -85,7 +85,7 @@ jobs:
         with:
           run: |
             ot = ${{steps.planout.outputs.result}}
-            string="${ot//\n/<br>}"
+            string="${ot//\n/'<br>'}"
             return string
             
       - name: Checkout Wiki
