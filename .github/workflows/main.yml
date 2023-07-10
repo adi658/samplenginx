@@ -84,6 +84,7 @@ jobs:
         run: |
           tfoutputplan=$(echo steps.planout.outputs.result | tr '\r' '<br \/>' )
           echo ${tfoutputplan}
+          return tfoutputplan
           
       - name: Checkout Wiki
         #if: ${{ github.event.release.prerelease }}
@@ -96,7 +97,7 @@ jobs:
         #if: ${{ github.event.release.prerelease }}
         run: |
           cd wiki && \
-          echo ${{steps.planout.outputs.result}} > plan1.md
+          echo ${{steps.formatnewline.outputs.result}} > plan1.md
           
       - name: Add and commit
         #if: ${{ github.event.release.prerelease }}
