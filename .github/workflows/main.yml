@@ -75,13 +75,15 @@ jobs:
               <summary>Validation Output</summary>
               \`\`\`\n
               ${{ steps.validate.outputs.stdout }}
+              ${{ steps.validate.outcome }}
+              ${{ steps.plan.outcome }}
               \`\`\`
             </details>
 
             #### Terraform Plan \`${{ steps.plan.outcome }}\`
             <details>
               <summary>Show Plan</summary>
-              \`\`\`\n
+              \`\`\`
               ${process.env.TFPLAN}
               \`\`\`
             </details>
