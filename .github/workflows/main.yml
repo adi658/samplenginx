@@ -60,23 +60,24 @@ jobs:
       - name: Plan output
         uses: actions/github-script@v6
         id: planout
-        #if: ${{ github.event_name == 'pull_request' || github.event.release.prerelease }}
+        # if: ${{ github.event_name == 'pull_request' || github.event.release.prerelease }}
         with:
           result-encoding: string
           script: |
-            const output = `#### Terraform Validation
-            #### Terraform Plan
+            const output = `#### Terraform Validation 
+            #### Terraform Plan 
             <details>
-            <summary>Show Plan for </summary>
+            <summary>Show Plan for</summary>
 
             \`\`\`
             ${process.env.TFPLAN}
             \`\`\`
 
-            </details>`;
+            </details>
+            **Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`**`;
             return ${output}
-        #env:
-          #TFPLAN: ${{ steps.fplan.outputs.tf_plan }}
+        env:
+          TFPLAN: ${{ steps.fplan.outputs.tf_plan }}
 
 
 #       - name: Terraform Plan
