@@ -59,47 +59,70 @@ jobs:
           echo "${plan}" | grep -v 'Refreshing state' | grep -v ': Reading...' | grep -v ': Read complete after' | grep -v '^ *$' | grep -A 4000 'Terraform will perform the following actions:' | cut -c -4000 >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
+
+      
       - name: Plan Output
         uses: actions/github-script@v6
         id: planout
-        env:
-          TFPLAN: ${{ steps.fplan.outputs.tf_plan }}
-        with:
-          script: |
-            const output = `## Terraform Prod Infra Plan
-            #### Terraform Initialization \`${{ steps.init.outcome }} \`
-            #### Terraform Validation \`${{ steps.validate.outcome }} \`
-            #### Terraform Plan \`${{ steps.plan.outcome }} `
-
-            <details><summary>Show Plan</summary>
-            ${process.env.TFPLAN}
-            </details>
-
-            *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
-            
-            return output
-
-#       - name: Plan output
-#         uses: actions/github-script@v6
-#         id: planout
-#         if: ${{ github.event_name == 'pull_request' || github.event.release.prerelease }}
-#         with:
-#           result-encoding: string
-#           script: |
-#             const output = `#### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
-#             #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
-#             <details>
-#             <summary>Show Plan for \`${{ matrix.target }}\`</summary>
-
-#             \`\`\`
-#             ${process.env.TFPLAN}
-#             \`\`\`
-
-#             </details>
-#             **Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`**`;
-#             return $output
 #         env:
 #           TFPLAN: ${{ steps.fplan.outputs.tf_plan }}
+#         with:
+
+        env:
+          PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
+        with:
+#           github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
+            #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
+            #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
+            <details><summary>Validation Output</summary>
+
+            \`\`\`\n
+            ${{ steps.validate.outputs.stdout }}
+            \`\`\`
+
+            </details>
+
+            #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
+
+            <details><summary>Show Plan</summary>
+
+            \`\`\`\n
+            ${process.env.PLAN}
+            \`\`\`
+
+            </details>
+
+            *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Working Directory: \`${{ env.tf_actions_working_dir }}\`, Workflow: \`${{ github.workflow }}\`*`;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            })
+      
+#       - name: Plan Output
+#         uses: actions/github-script@v6
+#         id: planout
+#         env:
+#           TFPLAN: ${{ steps.fplan.outputs.tf_plan }}
+#         with:
+#           script: |
+#             const output = `## Terraform Prod Infra Plan
+#             #### Terraform Initialization \`${{ steps.init.outcome }} \`
+#             #### Terraform Validation \`${{ steps.validate.outcome }} \`
+#             #### Terraform Plan \`${{ steps.plan.outcome }} `
+
+#             <details><summary>Show Plan</summary>
+#             ${process.env.TFPLAN}
+#             </details>
+
+#             *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
+            
+#             return output
+
           
       # plan end ------------------------------------------------------------------------
       
