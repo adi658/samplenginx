@@ -83,9 +83,12 @@ jobs:
         uses: actions/github-script@v6
         id: formatnewline
         with:
-          run: |
-            const str = "${ ${{steps.planout.outputs.result}}//\\n/ }"
-            echo ${str}
+         run: |
+          tfoutputplan=$(cat <<'EOF'
+          "${ steps.planout.outputs.result//\\n/ }"
+          EOF
+          )
+          echo "output<<EOF" >> $GITHUB_TF_OUTPUT
             
       - name: Checkout Wiki
         #if: ${{ github.event.release.prerelease }}
