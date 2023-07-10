@@ -64,14 +64,10 @@ jobs:
         with:
           result-encoding: string
           script: |
-            const output = `#### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
-            #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
+            const output = `#### Terraform Validation
+            #### Terraform Plan 
             <details>
-            <summary>Show Plan for \`${{ matrix.target }}\`</summary>
-
-#             \`\`\`
-#             ${process.env.TFPLAN}
-#             \`\`\`
+            <summary>Show Plan for </summary>
 
             </details>
             **Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`**`;
