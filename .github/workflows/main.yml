@@ -49,7 +49,7 @@ jobs:
         working-directory: ${{ env.working-directory }}
         run: |
           plan=$(cat <<'EOF'
-          ${{ format('{0}{1}', ${echo ${{ steps.plan.outputs.stdout }} | tr '\\n' \<br\>} ) , $(echo ${{ steps.plan.outputs.stderr }} | tr '\\n' \<br\>} ) ) }}
+          ${{ format('{0}{1}', ${echo steps.plan.outputs.stdout | tr '\\n' \<br\>} , $(echo steps.plan.outputs.stderr | tr '\\n' \<br\>} ) }}
           EOF
           )
           echo "tf_plan<<EOF" >> $GITHUB_OUTPUT
