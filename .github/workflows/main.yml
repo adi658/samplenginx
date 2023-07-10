@@ -67,13 +67,11 @@ jobs:
             <details>
               <summary>Show Plan for \`${{ matrix.target }}\`</summary>
               \`\`\`
-                ${process.env.TFPLAN}
+              ${process.env.TFPLAN}
               \`\`\`
             </details>
-
             **Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`**`;
-            return output
-            
+            return output            
         env:
           TFPLAN: ${{ steps.fplan.outputs.tf_plan }}
           
