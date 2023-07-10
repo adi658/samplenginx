@@ -37,7 +37,7 @@ jobs:
 
       - name: Terraform_Plan
         id: plan
-        run: $(terraform plan -no-color)
+        run: terraform plan -no-color
         working-directory: ${{ env.working-directory }}
         env:
           TF_VAR_assume_role: "my-github-actions-role"    
